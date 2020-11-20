@@ -1,5 +1,6 @@
 package com.example.custome_list_view.adpaters;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -21,22 +22,44 @@ public class MoviesCustomAdpater extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 0;
+        return movies.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Movies getItem(int position) {
+        return movies.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+
+        ViewHolder viewHolder;
+        if(convertView==null){
+            convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.movies_layout, null);
+            viewHolder=new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+
+        }
+        else
+        {
+            viewHolder=(ViewHolder) convertView.getTag();
+        }
+
+        Movies movies=getItem( position);
+        viewHolder.moviesNameTV.setText(movies.getMovieName());
+        viewHolder.DescriptionTV.setText(movies.getDescription());
+        viewHolder.RatingTV.setText(movies.getRatings());
+        viewHolder.ImageTV.setImageResource(movies.getImage_file(position));
+
+
+
+        return convertView;
+
     }
 
     class ViewHolder{
